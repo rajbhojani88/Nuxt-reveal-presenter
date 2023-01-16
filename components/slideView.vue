@@ -1,5 +1,5 @@
 <template>
-  <div class="container" ref="slide-data">
+  <div ref="slide-data" class="container">
     <div class="reveal">
       <div class="slides">
         <section v-for="slide in slides" :key="slide.id">
@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import slideData from '@/data.json'
 import Reveal from "reveal.js";
+import slideData from '@/data.json'
 import "reveal.js/dist/reveal.css";
 import "reveal.js/dist/theme/white.css";
 import "reveal.js/dist/theme/black.css";

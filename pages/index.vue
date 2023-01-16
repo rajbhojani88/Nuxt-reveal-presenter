@@ -1,9 +1,12 @@
 <template>
-  <slideView />
+  <PresentationsList />
 </template>
 
 <script>
 export default {
-  name: "IndexPage",
+  name: "Presentations",
+  async asyncData({ store }) {
+    await store.dispatch("getAll");
+  },
 };
 </script>
