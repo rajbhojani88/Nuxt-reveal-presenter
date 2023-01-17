@@ -107,6 +107,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-@import url(http://fonts.googleapis.com/icon?family=Material+Icons);
-</style>
