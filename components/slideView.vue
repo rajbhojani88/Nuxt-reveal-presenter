@@ -13,19 +13,25 @@
 </template>
 
 <script>
-import Reveal from "reveal.js";
-import slideData from '@/data.json'
-import "reveal.js/dist/reveal.css";
-import "reveal.js/dist/theme/white.css";
-import "reveal.js/dist/theme/black.css";
+import Reveal from 'reveal.js'
+import 'reveal.js/dist/reveal.css'
+import 'reveal.js/dist/theme/white.css'
+import 'reveal.js/dist/theme/black.css'
 export default {
-  name: "NuxtTutorial",
+  name: 'NuxtTutorial',
   data() {
     return {
-      slides: localStorage.getItem('slides')
-        ? JSON.parse(localStorage.getItem('slides'))
-        : slideData.slides
+      lesg: 3,
     }
+  },
+  computed: {
+    presentation() {
+      return this.$store.getters.getPresentation
+    },
+    slides() {
+      const slidedata = JSON.parse(this.presentation.slide)
+      return slidedata.slides
+    },
   },
   mounted() {
     Reveal(this.$refs.slide_data).initialize(
@@ -39,12 +45,12 @@ export default {
         height: '100%',
         margin: 0,
         minScale: 1,
-        maxScale: 1
+        maxScale: 1,
       },
       { controlsTutorial: false }
     )
-  }
-};
+  },
+}
 </script>
 <style scoped>
 .container {

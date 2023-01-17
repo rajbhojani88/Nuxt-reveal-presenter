@@ -9,15 +9,16 @@
       align-items="center"
       shadow="sm"
     >
-      <c-form-control is-required>
-        <c-form-label for="title">First name</c-form-label>
+      <c-heading as="h2" size="xl"> {{ presentation.title }} </c-heading>
+      <c-form-control mt="4" is-required>
+        <c-form-label for="title">Title</c-form-label>
         <c-input id="title" v-model="form.title" placeholder="title" />
       </c-form-control>
-      <c-form-control is-required>
+      <c-form-control mt="4" is-required>
         <c-form-label for="subtitle">subtitle</c-form-label>
         <c-input id="subtitle" v-model="form.subtitle" placeholder="subtitle" />
       </c-form-control>
-      <c-form-control is-required>
+      <c-form-control mt="4" is-required>
         <c-form-label for="content">content</c-form-label>
         <c-input id="content" v-model="form.content" placeholder="content" />
       </c-form-control>
@@ -35,16 +36,27 @@
 </template>
 
 <script>
-import { CButton, CFlex, CBox, CFormControl, CFormLabel } from '@chakra-ui/vue'
+import {
+  CButton,
+  CHeading,
+  CFlex,
+  CBox,
+  CFormControl,
+  CFormLabel,
+} from '@chakra-ui/vue'
 
 export default {
   name: 'CreatePresentations',
   components: {
     CFlex,
     CBox,
+    CHeading,
     CFormControl,
     CFormLabel,
     CButton,
+  },
+  async asyncData({ store, params }) {
+    await store.dispatch('getOne', params.id)
   },
   data() {
     return {
@@ -55,11 +67,21 @@ export default {
       },
     }
   },
+  computed: {
+    presentation() {
+      return this.$store.getters.getPresentation
+    },
+  },
   methods: {
     async update() {
-      // eslint-disable-next-line no-console
-      console.log(this.form)
-      await this.$store.dispatch('updateSlide', this.form)
+      if (this.presentation.slide === null) {
+        this.presentation.slide = JSON.stringify({ slides: [this.form] })
+      } else {
+        const slidesData = JSON.parse(this.presentation.slide)
+        slidesData.slides.push(this.form)
+        this.presentation.slide = JSON.stringify(slidesData)
+      }
+      await this.$store.dispatch('updateSlide', this.presentation)
     },
   },
 }

@@ -11,28 +11,38 @@
       title="Presentations List"
       :columns="tableColumns1"
       :rows="tableRows5"
+      :per-page="[3, 5, 10]"
       ><th slot="thead-tr">ACTIONS</th>
       <template slot="tbody-tr" scope="props">
         <td>
           <c-icon-button
+            v-if="props.row.slide != null"
             variant-color="vue"
-            aria-label="delete"
+            aria-label="show"
             size="lg"
             icon="arrow-forward"
             @click="(e) => showDetail(props.row, e)"
           />
           <c-icon-button
             variant-color="vue"
-            aria-label="Call Jonathan"
+            aria-label="add"
             size="lg"
-            icon="Edit"
+            icon="add"
+            @click="(e) => addItem(props.row, e)"
+          />
+          <c-icon-button
+            v-if="props.row.slide != null"
+            variant-color="vue"
+            aria-label="edit"
+            size="lg"
+            icon="minus"
             @click="(e) => editItem(props.row, e)"
           />
           <c-icon-button
             variant-color="vue"
-            aria-label="Call Jonathan"
+            aria-label="delete"
             size="lg"
-            icon="Delete"
+            icon="close"
             @click="(e) => deleteItem(props.row, e)"
           />
         </td>
@@ -77,17 +87,22 @@ export default {
     showDetail(data, event) {
       // eslint-disable-next-line no-console
       console.log(event, data)
-      this.$router.push("/"+data.id)
+      this.$router.push('/' + data.id)
+    },
+    addItem(data, event) {
+      // eslint-disable-next-line no-console
+      console.log(event, data)
+      this.$router.push('/' + data.id + '/create')
     },
     editItem(data, event) {
       // eslint-disable-next-line no-console
       console.log(event, data)
-      window.alert('check out the console to see the logs')
+      this.$router.push('/' + data.id + '/edit')
     },
-    deleteItem(data, event) {
+    async deleteItem(data, event) {
       // eslint-disable-next-line no-console
       console.log(event, data)
-      window.alert('check out the console to see the logs')
+      await this.$store.dispatch('deletePresentation', data.id)
     },
   },
 }
