@@ -1,11 +1,15 @@
 <template>
   <c-box
-    max-w="max-content"
+    border="1px"
+    max-width="700px"
     border-width="1px"
     rounded="lg"
     overflow="hidden"
     align-items="center"
     shadow="sm"
+    p="6"
+    m="6"
+    w="100%"
   >
     <datatable
       title="Presentations List"
@@ -18,21 +22,29 @@
             variant-color="vue"
             aria-label="delete"
             size="lg"
-            icon="arrow-forward"
+            icon="eye"
             @click="(e) => showDetail(props.row, e)"
           />
           <c-icon-button
             variant-color="vue"
-            aria-label="Call Jonathan"
+            aria-label="delete"
             size="lg"
-            icon="Edit"
-            @click="(e) => editItem(props.row, e)"
+            icon="add"
+            @click="(e) => addItem(props.row, e)"
           />
           <c-icon-button
             variant-color="vue"
-            aria-label="Call Jonathan"
+            aria-label="delete"
             size="lg"
-            icon="Delete"
+            icon="pencil"
+            @click="(e) => editItem(props.row, e)"
+          />
+
+          <c-icon-button
+            variant-color="vue"
+            aria-label="delete"
+            size="lg"
+            icon="trash"
             @click="(e) => deleteItem(props.row, e)"
           />
         </td>
@@ -77,7 +89,12 @@ export default {
     showDetail(data, event) {
       // eslint-disable-next-line no-console
       console.log(event, data)
-      this.$router.push("/"+data.id)
+      this.$router.push('/' + data.id)
+    },
+    addItem(data, event) {
+      // eslint-disable-next-line no-console
+      console.log(event, data)
+      window.alert('check out the console to see the logs')
     },
     editItem(data, event) {
       // eslint-disable-next-line no-console
@@ -94,4 +111,20 @@ export default {
 </script>
 <style scoped>
 @import url(http://fonts.googleapis.com/icon?family=Material+Icons);
+
+.c-icon-button {
+  margin: 0 5px;
+}
+
+.c-icon-button:hover {
+  background-color: #e8e8e8;
+}
+
+.c-icon-button:active {
+  background-color: #d8d8d8;
+}
+
+.c-icon-button:focus {
+  background-color: #e8e8e8;
+}
 </style>

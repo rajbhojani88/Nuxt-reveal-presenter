@@ -2,12 +2,7 @@
   <div class="container">
     <c-theme-provider>
       <c-color-mode-provider v-slot="{ colorMode }">
-        <c-box
-          v-bind="mainStyles[colorMode]"
-          w="100vw"
-          h="100vh"
-          as="section"
-        >
+        <c-box v-bind="mainStyles[colorMode]" w="100vw" h="100vh" as="section">
           <c-reset />
           <nav-bar />
           <nuxt />
@@ -17,9 +12,13 @@
   </div>
 </template>
 
-
 <script>
-import { CThemeProvider, CColorModeProvider, CReset, CBox } from '@chakra-ui/vue'
+import {
+  CThemeProvider,
+  CColorModeProvider,
+  CReset,
+  CBox,
+} from '@chakra-ui/vue'
 import NavBar from '@/components/NavBar'
 export default {
   name: 'DefaultLayout',
@@ -28,21 +27,25 @@ export default {
     CColorModeProvider,
     CReset,
     CBox,
-    NavBar
+    NavBar,
   },
-  data () {
+  data() {
     return {
       mainStyles: {
         dark: {
           bg: 'gray.900',
-          color: 'whiteAlpha.900'
+          color: 'whiteAlpha.900',
+          textColor: 'whiteAlpha.900',
+          borderColor: 'whiteAlpha.900',
         },
         light: {
           bg: 'whiteAlpha.900',
-          color: 'gray.900'
-        }
-      }
+          color: 'gray.900',
+          textColor: 'gray.900',
+          borderColor: 'gray.900',
+        },
+      },
     }
-  }
+  },
 }
 </script>

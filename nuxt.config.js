@@ -1,3 +1,10 @@
+import {
+  faGlobeAfrica,
+  faEnvelope,
+  faPencil,
+  faEye,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -44,6 +51,20 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
   ],
+
+  // Chakra module configuration: https://chakra.nuxtjs.org/setup
+  chakra: {
+    icons: {
+      iconPack: 'fa',
+      iconSet: {
+        faGlobeAfrica,
+        faEnvelope,
+        faPencil,
+        faEye,
+        faTrash,
+      },
+    },
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
