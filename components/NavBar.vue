@@ -18,6 +18,9 @@
       list-style-type="none"
       ml="auto"
     >
+      <c-box as="li" mr="2rem">
+        <CreateModel />
+      </c-box>
       <c-box as="li" mr="8">
         <c-link
           color="gray.500"
@@ -38,6 +41,7 @@
           Repo
         </c-link>
       </c-box>
+
       <c-box as="li">
         <c-icon-button
           variant="ghost"
@@ -48,7 +52,6 @@
           :icon="colorMode == 'light' ? 'moon' : 'sun'"
           @click="$toggleColorMode"
         />
-        Current mode: {{ colorMode }}
       </c-box>
     </c-box>
   </c-box>
@@ -64,9 +67,23 @@ export default {
     CIconButton,
   },
   inject: ['$chakraColorMode', '$toggleColorMode'],
+  data() {
+    return {
+      isOpen: false,
+    }
+  },
+
   computed: {
     colorMode() {
       return this.$chakraColorMode()
+    },
+  },
+  methods: {
+    open() {
+      this.isOpen = true
+    },
+    close() {
+      this.isOpen = false
     },
   },
 }
