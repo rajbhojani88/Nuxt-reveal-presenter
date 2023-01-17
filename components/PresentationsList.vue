@@ -20,7 +20,7 @@
             variant-color="vue"
             aria-label="show"
             size="lg"
-            icon="arrow-forward"
+            icon="eye"
             @click="(e) => showDetail(props.row, e)"
           />
           <c-icon-button
@@ -35,14 +35,14 @@
             variant-color="vue"
             aria-label="edit"
             size="lg"
-            icon="minus"
+            icon="pencil"
             @click="(e) => editItem(props.row, e)"
           />
           <c-icon-button
             variant-color="vue"
             aria-label="delete"
             size="lg"
-            icon="close"
+            icon="trash"
             @click="(e) => deleteItem(props.row, e)"
           />
         </td>
