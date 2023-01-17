@@ -22,7 +22,7 @@ export default {
       {
         rel: 'stylesheet',
         type: 'text/css',
-        href: 'http://fonts.googleapis.com/icon?family=Material+Icons',
+        href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
       },
     ],
   },
