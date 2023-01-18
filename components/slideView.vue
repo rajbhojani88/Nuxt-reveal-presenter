@@ -3,9 +3,11 @@
     <div class="reveal">
       <div class="slides">
         <section v-for="slide in slides" :key="slide.id">
-          <h1>{{ slide.title }}</h1>
-          <h3>{{ slide.subtitle }}</h3>
-          <p>{{ slide.content }}</p>
+          <section v-for="vslide in vslides(slide)" :key="vslide.id">
+            <h1>{{ vslide.title }}</h1>
+            <h3>{{ vslide.subtitle }}</h3>
+            <p>{{ vslide.content }}</p>
+          </section>
         </section>
       </div>
     </div>
@@ -19,10 +21,12 @@ import 'reveal.js/dist/theme/white.css'
 import 'reveal.js/dist/theme/black.css'
 export default {
   name: 'NuxtTutorial',
-  data() {
-    return {
-      lesg: 3,
-    }
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    },
   },
   computed: {
     presentation() {
@@ -49,6 +53,15 @@ export default {
       },
       { controlsTutorial: false }
     )
+  },
+  methods: {
+    vslides(data) {
+      if (data.parent === true) {
+        return [data, ...data.verlicalList]
+      } else {
+        return [data]
+      }
+    },
   },
 }
 </script>
