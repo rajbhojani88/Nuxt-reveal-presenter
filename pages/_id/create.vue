@@ -1,65 +1,83 @@
 <template>
-  <c-flex align="center" pt="5rem" justify="center">
-    <c-box
-      w="75%"
-      p="2rem"
-      border-width="1px"
-      rounded="lg"
-      overflow="hidden"
-      align-items="center"
-      shadow="sm"
+  <c-grid w="100%" h="inherit" template-columns="repeat(8, 1fr)" gap="2">
+    <c-grid-item col-span="4" h="inherit"
+      ><c-flex align="center" pt="5rem" justify="center">
+        <c-box
+          w="75%"
+          p="2rem"
+          border-width="1px"
+          rounded="lg"
+          overflow="hidden"
+          align-items="center"
+          shadow="sm"
+        >
+          <c-heading as="h2" size="xl"> {{ presentation.title }} </c-heading>
+          <c-form-control mt="4" is-required>
+            <c-form-label for="title">Title</c-form-label>
+            <c-input id="title" v-model="form.title" placeholder="title" />
+          </c-form-control>
+          <c-form-control mt="4" is-required>
+            <c-form-label for="subtitle">subtitle</c-form-label>
+            <c-input
+              id="subtitle"
+              v-model="form.subtitle"
+              placeholder="subtitle"
+            />
+          </c-form-control>
+          <c-form-control mt="4" is-required>
+            <c-form-label for="content">content</c-form-label>
+            <c-input
+              id="content"
+              v-model="form.content"
+              placeholder="content"
+            />
+          </c-form-control>
+          <c-form-control mt="4" is-required>
+            <c-checkbox v-model="form.vertical">Vertical</c-checkbox>
+            <c-checkbox
+              v-if="form.vertical"
+              v-model="form.parent"
+              :is-disabled="parentSlides.length == 0 && form.vertical"
+              >Parent</c-checkbox
+            >
+            <c-form-control
+              v-if="parentSlides.length != 0 && form.vertical && !form.parent"
+              mt="4"
+            >
+              <c-form-label for="title">Vertical Parent</c-form-label>
+              <c-select v-model="slideID" placeholder="Select Parent">
+                <option
+                  v-for="slide in parentSlides"
+                  :key="slide.id"
+                  :value="slide.id"
+                >
+                  {{ slide.title }}
+                </option>
+              </c-select>
+            </c-form-control>
+          </c-form-control>
+          <c-button
+            m="2rem"
+            style="float: right"
+            variant-color="blue"
+            variant="solid"
+            @click="create"
+          >
+            Submit
+          </c-button>
+        </c-box>
+      </c-flex></c-grid-item
     >
-      <c-heading as="h2" size="xl"> {{ presentation.title }} </c-heading>
-      <c-form-control mt="4" is-required>
-        <c-form-label for="title">Title</c-form-label>
-        <c-input id="title" v-model="form.title" placeholder="title" />
-      </c-form-control>
-      <c-form-control mt="4" is-required>
-        <c-form-label for="subtitle">subtitle</c-form-label>
-        <c-input id="subtitle" v-model="form.subtitle" placeholder="subtitle" />
-      </c-form-control>
-      <c-form-control mt="4" is-required>
-        <c-form-label for="content">content</c-form-label>
-        <c-input id="content" v-model="form.content" placeholder="content" />
-      </c-form-control>
-      <c-form-control mt="4" is-required>
-        <c-checkbox v-model="form.vertical">Vertical</c-checkbox>
-        <c-checkbox
-          v-if="form.vertical"
-          v-model="form.parent"
-          :is-disabled="parentSlides.length == 0 && form.vertical"
-          >Parent</c-checkbox
-        >
-        <c-form-control
-          v-if="parentSlides.length != 0 && form.vertical && !form.parent"
-          mt="4"
-        >
-          <c-form-label for="title">Vertical Parent</c-form-label>
-          <c-select v-model="slideID">
-            <option v-for="slide in parentSlides" :key="slide.id" :value="slide.id">
-              {{ slide.title }}
-            </option>
-          </c-select>
-        </c-form-control>
-      </c-form-control>
-      <c-button
-        m="2rem"
-        style="float: right"
-        variant-color="blue"
-        variant="solid"
-        @click="create"
-      >
-        Submit
-      </c-button>
-    </c-box>
-  </c-flex>
+    <c-grid-item col-span="4" h="inherit"
+      ><SlideLiveView :slides="form"
+    /></c-grid-item>
+  </c-grid>
 </template>
 
 <script>
 import {
   CButton,
   CHeading,
-  CFlex,
   CBox,
   CFormControl,
   CFormLabel,
@@ -67,19 +85,19 @@ import {
 export default {
   name: 'CreatePresentations',
   components: {
-    CFlex,
     CBox,
     CHeading,
     CFormControl,
     CFormLabel,
     CButton,
   },
+
   async asyncData({ store, params }) {
     await store.dispatch('getOne', params.id)
   },
   data() {
     return {
-      slideID: 1,
+      slideID: null,
       form: {
         id: 1,
         title: '',
@@ -140,3 +158,5 @@ export default {
   },
 }
 </script>
+
+
