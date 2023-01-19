@@ -14,17 +14,11 @@
 
 <script>
 import Reveal from 'reveal.js'
-import slideData from '@/data.json'
 
 export default {
   name: 'SlideLiveView',
   props: {
     slides: { type: Object, default: null },
-  },
-  data() {
-    return {
-      slide: slideData.slides[0],
-    }
   },
   // eslint-disable-next-line space-before-function-paren
   mounted() {

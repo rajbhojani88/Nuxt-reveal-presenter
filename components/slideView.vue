@@ -4,9 +4,11 @@
       <div class="slides">
         <section v-for="slide in slides" :key="slide.id">
           <section v-for="vslide in vslides(slide)" :key="vslide.id">
-            <h1>{{ vslide.title }}</h1>
-            <h3>{{ vslide.subtitle }}</h3>
-            <p>{{ vslide.content }}</p>
+            <type-SlideCode v-if="vslide.type == 'code'" :slide="vslide" />
+            <type-SlideDefault v-else :slide="vslide" />
+          </section>
+          <section>
+            <type-SlideCode :slide="slide" />
           </section>
         </section>
       </div>
@@ -17,10 +19,19 @@
 <script>
 import Reveal from 'reveal.js'
 import 'reveal.js/dist/reveal.css'
+import 'reveal.js/dist/reset.css'
+import 'reveal.js/plugin/highlight/monokai.css'
 import 'reveal.js/dist/theme/white.css'
 import 'reveal.js/dist/theme/black.css'
+import RevealZoom from 'reveal.js/plugin/zoom/zoom.js'
+import RevealNotes from 'reveal.js/plugin/notes/notes.js'
+import RevealSearch from 'reveal.js/plugin/search/search.js'
+import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.js'
+import RevealHighlight from 'reveal.js/plugin/highlight/highlight.js'
+
 export default {
   name: 'NuxtTutorial',
+
   filters: {
     capitalize: function (value) {
       if (!value) return ''
@@ -38,21 +49,28 @@ export default {
     },
   },
   mounted() {
-    Reveal(this.$refs.slide_data).initialize(
-      {
-        controls: true,
-        progress: true,
-        history: true,
-        center: true,
-        transition: 'slide',
-        width: '100%',
-        height: '100%',
-        margin: 0,
-        minScale: 1,
-        maxScale: 1,
-      },
-      { controlsTutorial: false }
-    )
+    Reveal(this.$refs.slide_data).initialize({
+      history: true,
+      transition: 'slide',
+      width: '100%',
+      height: '100%',
+      margin: 0,
+      minScale: 1,
+      maxScale: 1,
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [
+        RevealZoom,
+        RevealNotes,
+        RevealSearch,
+        RevealMarkdown,
+        RevealHighlight,
+      ],
+    })
   },
   methods: {
     vslides(data) {

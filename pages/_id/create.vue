@@ -33,6 +33,18 @@
             />
           </c-form-control>
           <c-form-control mt="4" is-required>
+            <c-form-label for="link">Link</c-form-label>
+            <c-input id="link" v-model="form.link" placeholder="link" />
+          </c-form-control>
+          <c-form-control mt="4" is-required>
+            <c-form-label for="linkText">Link Text</c-form-label>
+            <c-input
+              id="linkText"
+              v-model="form.linkText"
+              placeholder="linkText"
+            />
+          </c-form-control>
+          <c-form-control mt="4" is-required>
             <c-checkbox v-model="form.vertical">Vertical</c-checkbox>
             <c-checkbox
               v-if="form.vertical"
@@ -104,6 +116,8 @@ export default {
         subtitle: '',
         content: '',
         under: '',
+        link: null,
+        linkText: null,
         parent: false,
         verlicalList: [],
         vertical: false,
@@ -158,5 +172,3 @@ export default {
   },
 }
 </script>
-
-
