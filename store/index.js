@@ -32,7 +32,7 @@ const mutations = {
 const actions = {
   async getAll({ commit }) {
     await this.$axios
-      .$get('https://testapi.io/api/gahole9342/resource/slidedatas')
+      .$get('https://testapi.io/api/gahole9342/resource/slidedata')
       .then(({ data }) => {
         commit('setPresentations', data)
       })
@@ -43,7 +43,7 @@ const actions = {
   },
   async getOne({ commit }, id) {
     await this.$axios
-      .$get('https://testapi.io/api/gahole9342/resource/slidedatas/' + id)
+      .$get('https://testapi.io/api/gahole9342/resource/slidedata/' + id)
       .then((data) => {
         commit('setPresentation', data)
       })
@@ -55,7 +55,7 @@ const actions = {
   async crateNewPresentation({ commit }, data) {
     await this.$axios({
       method: 'Post',
-      url: 'https://testapi.io/api/gahole9342/resource/slidedatas',
+      url: 'https://testapi.io/api/gahole9342/resource/slidedata',
       params: data,
     })
       .then((response) => {
@@ -70,7 +70,7 @@ const actions = {
   async updateSlide({ commit }, data) {
     await this.$axios({
       method: 'put',
-      url: 'https://testapi.io/api/gahole9342/resource/slidedatas/' + data.id,
+      url: 'https://testapi.io/api/gahole9342/resource/slidedata/' + data.id,
       params: data,
     })
       .then((response) => {
@@ -85,7 +85,7 @@ const actions = {
   async deletePresentation({ commit }, id) {
     await this.$axios({
       method: 'delete',
-      url: 'https://testapi.io/api/gahole9342/resource/slidedatas/' + id
+      url: 'https://testapi.io/api/gahole9342/resource/slidedata/' + id
     })
       .then((response) => {
         // eslint-disable-next-line no-console
