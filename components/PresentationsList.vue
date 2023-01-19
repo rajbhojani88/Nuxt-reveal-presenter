@@ -102,7 +102,14 @@ export default {
     async deleteItem(data, event) {
       // eslint-disable-next-line no-console
       console.log(event, data)
-      await this.$store.dispatch('deletePresentation', data.id)
+      await this.$store.dispatch('deletePresentation', data.id).then(() => {
+        this.$toastPlgin({
+          title: 'Success',
+          message: 'Presentation deleted successfully',
+          type: 'success',
+          position: 'top-right',
+        })
+      })
     },
   },
 }

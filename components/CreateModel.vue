@@ -39,6 +39,7 @@
 
 <script>
 import { CIconButton } from '@chakra-ui/vue'
+
 export default {
   components: {
     CIconButton,
@@ -60,8 +61,17 @@ export default {
       this.form.title = ''
     },
     async create() {
-      await this.$store.dispatch('crateNewPresentation', this.form)
+      await this.$store.dispatch('crateNewPresentation', this.form).then(() => {
+        this.$toastPlugin({
+          title: 'Success',
+          description: 'Presentation created successfully',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        })
+      })
       await this.$store.dispatch('getAll')
+
       this.isOpen = false
       this.form.title = ''
     },
