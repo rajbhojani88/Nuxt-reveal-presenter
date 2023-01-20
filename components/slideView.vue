@@ -7,7 +7,7 @@
             <type-SlideCode v-if="vslide.type == 'code'" :slide="vslide" />
             <type-SlideDefault v-else :slide="vslide" />
           </section>
-          <section>
+          <section data-auto-animate>
             <type-SlideCode :slide="slide" />
           </section>
         </section>
@@ -30,7 +30,7 @@ import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.js'
 import RevealHighlight from 'reveal.js/plugin/highlight/highlight.js'
 
 export default {
-  name: 'NuxtTutorial',
+  name: 'SlideView',
 
   filters: {
     capitalize: function (value) {

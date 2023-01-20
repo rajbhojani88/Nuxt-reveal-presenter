@@ -3,9 +3,15 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h1>{{ slides.title }}</h1>
-          <h3>{{ slides.subtitle }}</h3>
-          <p>{{ slides.content }}</p>
+          <h2 data-id="code-title">{{ slides.title }}</h2>
+          <pre
+            data-id="code-animation"
+          ><code class="hljs javascript" data-trim data-line-numbers>
+{{ slides.code }}
+					</code></pre>
+          <p>
+            {{ slides.content }}
+          </p>
         </section>
       </div>
     </div>
@@ -52,7 +58,6 @@ export default {
   height: 80vh;
   overflow: hidden;
   position: relative;
-  margin-top: 20px;
 }
 
 h1 {

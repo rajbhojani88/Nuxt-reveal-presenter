@@ -1,10 +1,10 @@
 <template>
-  <c-grid w="100%" h="inherit" template-columns="repeat(8, 1fr)" gap="2">
+  <c-grid w="100%" h="inherit" template-columns="repeat(8, 1fr)" gap="1">
     <c-grid-item col-span="4" h="inherit"
-      ><c-flex align="center" pt="5rem" justify="center">
+      ><c-flex align="center" pt="2rem" justify="center">
         <c-box
-          w="75%"
-          p="2rem"
+          w="90%"
+          p="1rem"
           border-width="1px"
           rounded="lg"
           overflow="hidden"
@@ -12,62 +12,27 @@
           shadow="sm"
         >
           <c-heading as="h2" size="xl"> {{ presentation.title }} </c-heading>
-          <c-form-control mt="4" is-required>
-            <c-form-label for="title">Title</c-form-label>
-            <c-input id="title" v-model="form.title" placeholder="title" />
-          </c-form-control>
-          <c-form-control mt="4" is-required>
-            <c-form-label for="subtitle">subtitle</c-form-label>
-            <c-input
-              id="subtitle"
-              v-model="form.subtitle"
-              placeholder="subtitle"
-            />
-          </c-form-control>
-          <c-form-control mt="4" is-required>
-            <c-form-label for="content">content</c-form-label>
-            <c-input
-              id="content"
-              v-model="form.content"
-              placeholder="content"
-            />
-          </c-form-control>
-          <c-form-control mt="4" is-required>
-            <c-form-label for="link">Link</c-form-label>
-            <c-input id="link" v-model="form.link" placeholder="link" />
-          </c-form-control>
-          <c-form-control mt="4" is-required>
-            <c-form-label for="linkText">Link Text</c-form-label>
-            <c-input
-              id="linkText"
-              v-model="form.linkText"
-              placeholder="linkText"
-            />
-          </c-form-control>
-          <c-form-control mt="4" is-required>
-            <c-checkbox v-model="form.vertical">Vertical</c-checkbox>
-            <c-checkbox
-              v-if="form.vertical"
-              v-model="form.parent"
-              :is-disabled="parentSlides.length == 0 && form.vertical"
-              >Parent</c-checkbox
-            >
-            <c-form-control
-              v-if="parentSlides.length != 0 && form.vertical && !form.parent"
-              mt="4"
-            >
-              <c-form-label for="title">Vertical Parent</c-form-label>
-              <c-select v-model="slideID" placeholder="Select Parent">
-                <option
-                  v-for="slide in parentSlides"
-                  :key="slide.id"
-                  :value="slide.id"
-                >
-                  {{ slide.title }}
-                </option>
-              </c-select>
-            </c-form-control>
-          </c-form-control>
+
+          <c-tabs variant="enclosed-colored" is-fitted>
+            <c-tab-list>
+              <c-tab>Default</c-tab>
+              <c-tab>code</c-tab>
+              <c-tab>Three</c-tab>
+            </c-tab-list>
+
+            <c-tab-panels>
+              <c-tab-panel>
+                <form-DefaultForm @updateData="updateData" />
+              </c-tab-panel>
+              <c-tab-panel>
+                <form-CodeForm @updateData="updateData" />
+              </c-tab-panel>
+              <c-tab-panel>
+                <p>three!</p>
+              </c-tab-panel>
+            </c-tab-panels>
+          </c-tabs>
+
           <c-button
             m="2rem"
             style="float: right"
@@ -80,94 +45,52 @@
         </c-box>
       </c-flex></c-grid-item
     >
-    <c-grid-item col-span="4" h="inherit"
-      ><SlideLiveView :slides="form"
-    /></c-grid-item>
+    <c-grid-item col-span="4" h="inherit">
+      <c-flex align="center" pt="2rem" justify="center">
+        <c-box
+          w="90%"
+          border-width="1px"
+          rounded="lg"
+          overflow="hidden"
+          align-items="center"
+          shadow="sm"
+        >
+          <SlideLiveView :slides="form" />
+        </c-box>
+      </c-flex>
+    </c-grid-item>
   </c-grid>
 </template>
 
 <script>
 import {
+  CTabs,
+  CTabList,
+  CTabPanels,
+  CTab,
   CButton,
   CHeading,
   CBox,
-  CFormControl,
-  CFormLabel,
 } from '@chakra-ui/vue'
+import commonform from '~/mixins/commonform.js'
 export default {
   name: 'CreatePresentations',
   components: {
+    CTabs,
+    CTabList,
+    CTabPanels,
+    CTab,
     CBox,
     CHeading,
-    CFormControl,
-    CFormLabel,
     CButton,
   },
-
+  mixins: [commonform],
   async asyncData({ store, params }) {
     await store.dispatch('getOne', params.id)
   },
-  data() {
-    return {
-      slideID: null,
-      form: {
-        id: 1,
-        title: '',
-        subtitle: '',
-        content: '',
-        under: '',
-        link: null,
-        linkText: null,
-        parent: false,
-        verlicalList: [],
-        vertical: false,
-      },
-    }
-  },
-  computed: {
-    presentation() {
-      return this.$store.getters.getPresentation
-    },
-    slides() {
-      if (this.presentation.slide != null) {
-        const slidedata = JSON.parse(this.presentation.slide)
-        return slidedata.slides
-      } else {
-        return []
-      }
-    },
-    parentSlides() {
-      return this.slides.filter((slide) => slide.parent === true)
-    },
-  },
-  watch: {
-    // whenever question changes, this function will run
-    'form.vertical': function (newVal, oldVal) {
-      if (this.parentSlides.length === 0) {
-        this.form.parent = newVal
-      }
-    },
-  },
   methods: {
-    // eslint-disable-next-line require-await
-    async create() {
-      if (this.presentation.slide === null) {
-        this.presentation.slide = JSON.stringify({ slides: [this.form] })
-      } else {
-        const slidesData = JSON.parse(this.presentation.slide)
-
-        if (this.form.vertical && !this.form.parent) {
-          this.form.id =
-            slidesData.slides[this.slideID - 1].verlicalList.length + 1
-          slidesData.slides[this.slideID - 1].verlicalList.push(this.form)
-        } else {
-          this.form.id = this.slides.length + 1
-          slidesData.slides.push(this.form)
-        }
-
-        this.presentation.slide = JSON.stringify(slidesData)
-      }
-      await this.$store.dispatch('updateSlide', this.presentation)
+    updateData(value) {
+      this.form = value
     },
   },
 }
