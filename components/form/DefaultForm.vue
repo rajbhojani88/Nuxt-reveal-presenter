@@ -64,6 +64,11 @@ export default {
         this.$emit('updateData', newValue)
       },
       deep: true
+    },
+    slideID: {
+      handler(newValue, oldValue) {
+        this.$emit('updateSlideID', newValue)
+      },
     }
   }
 }

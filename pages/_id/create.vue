@@ -22,10 +22,16 @@
 
             <c-tab-panels>
               <c-tab-panel>
-                <form-DefaultForm @updateData="updateData" />
+                <form-DefaultForm
+                  @updateData="updateData"
+                  @updateSlideID="updateSlideID"
+                />
               </c-tab-panel>
               <c-tab-panel>
-                <form-CodeForm @updateData="updateData" />
+                <form-CodeForm
+                  @updateData="updateData"
+                  @updateSlideID="updateSlideID"
+                />
               </c-tab-panel>
               <c-tab-panel>
                 <p>three!</p>
@@ -91,6 +97,9 @@ export default {
   methods: {
     updateData(value) {
       this.form = value
+    },
+    updateSlideID(value) {
+      this.slideID = value
     },
   },
 }
