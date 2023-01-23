@@ -36,9 +36,12 @@ const actions = {
       .then(({ data }) => {
         commit('setPresentations', data)
       })
-      .catch(({ response }) => {
-        // eslint-disable-next-line no-console
-        console.log('response errorr', response)
+      .catch((response) => {
+        this.$toaster({
+          title: 'Error',
+          description: response.message,
+          status: 'error',
+        })
       })
   },
   async getOne({ commit }, id) {
@@ -47,9 +50,12 @@ const actions = {
       .then((data) => {
         commit('setPresentation', data)
       })
-      .catch(({ response }) => {
-        // eslint-disable-next-line no-console
-        console.log('response errorr', response)
+      .catch((response) => {
+        this.$toaster({
+          title: 'Error',
+          description: response.message,
+          status: 'error',
+        })
       })
   },
   async crateNewPresentation({ commit }, data) {
@@ -62,9 +68,12 @@ const actions = {
         // eslint-disable-next-line no-console
         console.log(response)
       })
-      .catch(({ response }) => {
-        // eslint-disable-next-line no-console
-        console.log('response errorr', response)
+      .catch((response) => {
+        this.$toaster({
+          title: 'Error',
+          description: response.message,
+          status: 'error',
+        })
       })
   },
   async updateSlide({ commit }, data) {
@@ -77,23 +86,34 @@ const actions = {
         // eslint-disable-next-line no-console
         console.log(response)
       })
-      .catch(({ response }) => {
-        // eslint-disable-next-line no-console
-        console.log('response errorr', response)
+      .catch((response) => {
+        this.$toaster({
+          title: 'Error',
+          description: response.message,
+          status: 'error',
+        })
       })
   },
   async deletePresentation({ commit }, id) {
     await this.$axios({
       method: 'delete',
-      url: 'https://testapi.io/api/gahole9342/resource/slidedata/' + id
+      url: 'https://testapi.io/api/gahole9342/resource/slidedata/' + id,
     })
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(response)
+        if (response.status === 204) {
+          this.$toaster({
+            title: 'Success',
+            description: 'Presentation deleted successfully',
+            status: 'success',
+          })
+        }
       })
-      .catch(({ response }) => {
-        // eslint-disable-next-line no-console
-        console.log('response errorr', response)
+      .catch((response) => {
+        this.$toaster({
+          title: 'Error',
+          description: response.message,
+          status: 'error',
+        })
       })
   },
 }

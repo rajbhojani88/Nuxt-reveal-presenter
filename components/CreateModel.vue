@@ -62,12 +62,10 @@ export default {
     },
     async create() {
       await this.$store.dispatch('crateNewPresentation', this.form).then(() => {
-        this.$toastPlugin({
+        this.$toaster({
           title: 'Success',
           description: 'Presentation created successfully',
           status: 'success',
-          duration: 3000,
-          isClosable: true,
         })
       })
       await this.$store.dispatch('getAll')
