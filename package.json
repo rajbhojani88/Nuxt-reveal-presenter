@@ -20,6 +20,7 @@
     "core-js": "^3.25.3",
     "nuxt": "^2.15.8",
     "reveal.js": "^4.4.0",
+    "vee-validate": "^3.2.0",
     "vue": "^2.7.10",
     "vue-materialize-datatable": "^1.0.4",
     "vue-server-renderer": "^2.7.10",

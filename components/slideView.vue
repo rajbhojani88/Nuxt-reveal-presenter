@@ -7,9 +7,6 @@
             <type-SlideCode v-if="vslide.type == 'code'" :slide="vslide" />
             <type-SlideDefault v-else :slide="vslide" />
           </section>
-          <section data-auto-animate>
-            <type-SlideCode :slide="slide" />
-          </section>
         </section>
       </div>
     </div>

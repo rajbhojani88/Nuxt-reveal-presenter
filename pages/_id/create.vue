@@ -38,16 +38,6 @@
               </c-tab-panel>
             </c-tab-panels>
           </c-tabs>
-
-          <c-button
-            m="2rem"
-            style="float: right"
-            variant-color="blue"
-            variant="solid"
-            @click="create"
-          >
-            Submit
-          </c-button>
         </c-box>
       </c-flex></c-grid-item
     >
@@ -74,7 +64,6 @@ import {
   CTabList,
   CTabPanels,
   CTab,
-  CButton,
   CHeading,
   CBox,
 } from '@chakra-ui/vue'
@@ -88,7 +77,6 @@ export default {
     CTab,
     CBox,
     CHeading,
-    CButton,
   },
   mixins: [commonform],
   async asyncData({ store, params }) {
