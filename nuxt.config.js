@@ -41,6 +41,11 @@ export default {
   plugins: [
     {
       src: './plugins/toastPlugin.js',
+      mode: 'client',
+    },
+    {
+      src: './plugins/vee-validate.js',
+      mode: 'client',
     },
   ],
 
@@ -81,5 +86,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['vee-validate"'],
+  },
 }

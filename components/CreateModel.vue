@@ -15,22 +15,40 @@
       <c-modal-content ref="content">
         <c-modal-header>Create New Presentation</c-modal-header>
         <c-modal-close-button />
-        <c-modal-body>
-          <c-form-control>
-            <c-form-label>Title</c-form-label>
-            <c-input
-              ref="initialRef"
-              v-model="form.title"
-              placeholder="Title"
-            />
-          </c-form-control>
-        </c-modal-body>
-        <c-modal-footer>
-          <c-button variant-color="blue" mr="3" @click="close">
-            Cancel
-          </c-button>
-          <c-button @click="create">Save</c-button>
-        </c-modal-footer>
+        <validation-observer v-slot="{ handleSubmit, invalid }" ref="observer">
+          <c-modal-body>
+            <c-form-control>
+              <c-form-label>Title</c-form-label>
+              <validation-provider
+                v-slot="{ errors }"
+                rules="required"
+                name="Title"
+                vid="title"
+              >
+                <c-input
+                  ref="initialRef"
+                  v-model="form.title"
+                  placeholder="Title"
+                />
+                <c-form-error v-if="errors[0]" class="c-form-error">{{
+                  errors[0]
+                }}</c-form-error>
+              </validation-provider>
+            </c-form-control>
+          </c-modal-body>
+          <c-modal-footer>
+            <c-button variant-color="blue" mr="3" @click="close">
+              Cancel
+            </c-button>
+            <c-button
+              variant-color="blue"
+              :is-loading="loading"
+              :is-disabled="invalid"
+              @click="handleSubmit(create)"
+              >Save</c-button
+            >
+          </c-modal-footer>
+        </validation-observer>
       </c-modal-content>
       <c-modal-overlay />
     </c-modal>
@@ -39,10 +57,13 @@
 
 <script>
 import { CIconButton } from '@chakra-ui/vue'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 
 export default {
   components: {
     CIconButton,
+    ValidationObserver,
+    ValidationProvider,
   },
   data() {
     return {
@@ -76,3 +97,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.c-form-error {
+  color: red;
+}
+</style>
