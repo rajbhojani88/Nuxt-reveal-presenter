@@ -79,7 +79,7 @@
           variant-color="blue"
           variant="solid"
           :is-disabled="invalid"
-          @click="handleSubmit(create)"
+          @click="handleSubmit(create('default'))"
         >
           Submit
         </c-button>
@@ -103,19 +103,6 @@ export default {
     ValidationProvider,
   },
   mixins: [commonform],
-  watch: {
-    form: {
-      handler(newValue, oldValue) {
-        this.$emit('updateData', newValue)
-      },
-      deep: true,
-    },
-    slideID: {
-      handler(newValue, oldValue) {
-        this.$emit('updateSlideID', newValue)
-      },
-    },
-  },
 }
 </script>
 <style scoped>

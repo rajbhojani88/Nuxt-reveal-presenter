@@ -1,19 +1,11 @@
 <template>
   <div>
     <h2 data-id="code-title">{{ slide.title }}</h2>
-    <pre
-      data-id="code-animation"
-    ><code class="hljs javascript" data-trim data-line-numbers>
-						import React, { useState } from 'react';
-
-						function Example() {
-						  const [count, setCount] = useState(0);
-
-						  return (
-						    ...
-						  );
-						}
-					</code></pre>
+    <pre data-id="code-animation">
+      <code class="hljs javascript" data-trim data-line-numbers>
+        {{ slide.code }}
+			</code>
+    </pre>
     <p>
       {{ slide.content }}
     </p>

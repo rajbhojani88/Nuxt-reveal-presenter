@@ -13,7 +13,11 @@
         >
           <c-heading as="h2" size="xl"> {{ presentation.title }} </c-heading>
 
-          <c-tabs variant="enclosed-colored" is-fitted>
+          <c-tabs
+            variant="enclosed-colored"
+            is-fitted
+            @change="tabchange($event)"
+          >
             <c-tab-list>
               <c-tab>Default</c-tab>
               <c-tab>code</c-tab>
@@ -22,16 +26,10 @@
 
             <c-tab-panels>
               <c-tab-panel>
-                <form-DefaultForm
-                  @updateData="updateData"
-                  @updateSlideID="updateSlideID"
-                />
+                <form-DefaultForm />
               </c-tab-panel>
               <c-tab-panel>
-                <form-CodeForm
-                  @updateData="updateData"
-                  @updateSlideID="updateSlideID"
-                />
+                <form-CodeForm />
               </c-tab-panel>
               <c-tab-panel>
                 <p>three!</p>
@@ -81,14 +79,6 @@ export default {
   mixins: [commonform],
   async asyncData({ store, params }) {
     await store.dispatch('getOne', params.id)
-  },
-  methods: {
-    updateData(value) {
-      this.form = value
-    },
-    updateSlideID(value) {
-      this.slideID = value
-    },
   },
 }
 </script>
