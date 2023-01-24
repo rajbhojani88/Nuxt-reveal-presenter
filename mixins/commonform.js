@@ -43,8 +43,12 @@ export default {
     },
   },
   methods: {
-    // eslint-disable-next-line require-await
-    async create() {
+    tabchange(e) {
+      // eslint-disable-next-line no-console
+      console.log('tabev', e)
+    },
+    async create(type) {
+      this.form.type = type
       if (this.presentation.slide === null) {
         this.presentation.slide = JSON.stringify({ slides: [this.form] })
       } else {
